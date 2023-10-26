@@ -19,4 +19,5 @@ Route::group([
     Route::crud('pigeon', 'PigeonCrudController');
     Route::crud('pedigree', 'PedigreeCrudController');
     Route::crud('race', 'RaceCrudController');
+    Route::get('pigeon_breeding_information', 'PigeonBreedingInformationController@index')->name('page.pigeon_breeding_information.index');
 }); // this should be the absolute last line of this file
