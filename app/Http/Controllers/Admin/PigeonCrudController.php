@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Admin\Operations\ShowPedigreeOperation;
 use App\Http\Requests\PigeonRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
@@ -41,6 +42,13 @@ class PigeonCrudController extends CrudController
     {
         //CRUD::setFromDb(); // set columns from db columns.
         CRUD::column('id');
+        CRUD::addColumn([
+            'name' => 'img_url',
+            'label' => 'Image',
+            'type' => 'image',
+            'width' => '300px',
+            'height' => '300px'
+        ]);
         CRUD::column('ring_number')->type('string');
         CRUD::column('name');
         CRUD::column('color_description')->label('Color');
@@ -117,7 +125,7 @@ class PigeonCrudController extends CrudController
             'name' => 'dam_id',
             'entity' => 'dam',
             'model' => 'App\Models\Pigeon',
-            'attribute' => 'name',
+            'attribute' => 'ring_number',
             'options' => (function ($query) {
                 return $query->orderBy('name', 'ASC')->get();
             })
@@ -129,7 +137,7 @@ class PigeonCrudController extends CrudController
             'name' => 'sire_id',
             'entity' => 'sire',
             'model' => 'App\Models\Pigeon',
-            'attribute' => 'name',
+            'attribute' => 'ring_number',
             'options' => (function ($query) {
                 return $query->orderBy('name', 'ASC')->get();
             })
@@ -146,7 +154,10 @@ class PigeonCrudController extends CrudController
             'name' => 'img_url',
             'label' => 'Image',
             'type' => 'upload',
-            'withFiles' => true
+            'withFiles' => [
+                'disk' => 'public',
+                'path' => 'uploads'
+            ]
         ]);
         /**
          * Fields can be defined using the fluent syntax:
