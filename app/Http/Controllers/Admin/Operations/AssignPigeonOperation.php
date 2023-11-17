@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin\Operations;
 
+use App\Models\Pigeon;
+use App\Models\RacePigeon;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Illuminate\Support\Facades\Route;
 
@@ -16,7 +18,7 @@ trait AssignPigeonOperation
      */
     protected function setupAssignPigeonRoutes($segment, $routeName, $controller)
     {
-        Route::get($segment.'/assign-pigeon', [
+        Route::get($segment.'/{raceId}/assign-pigeon', [
             'as'        => $routeName.'.assignPigeon',
             'uses'      => $controller.'@assignPigeon',
             'operation' => 'assignPigeon',
@@ -45,13 +47,16 @@ trait AssignPigeonOperation
      *
      * @return Response
      */
-    public function assignPigeon()
+    public function assignPigeon(int $raceId)
     {
         CRUD::hasAccessOrFail('assignPigeon');
 
         // prepare the fields you need to show
         $this->data['crud'] = $this->crud;
-        $this->data['title'] = CRUD::getTitle() ?? 'Assign Pigeon '.$this->crud->entity_name;
+        $this->data['title'] = CRUD::getTitle() ?? 'Assign Pigeon';
+        $this->data['raceId'] = $raceId;
+        $this->data['pigeons'] = Pigeon::where('owner_id', backpack_auth()->id())->get();
+        $this->data['racePigeons'] = RacePigeon::where('race_id', $raceId)->get();
 
         // load the view
         return view('crud::operations.assign_pigeon', $this->data);

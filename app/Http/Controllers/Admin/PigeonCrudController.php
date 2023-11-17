@@ -54,12 +54,6 @@ class PigeonCrudController extends CrudController
         CRUD::column('color_description')->label('Color');
         CRUD::column('sex')->label('Gender');
         CRUD::column('notes')->type('text');
-
-
-        /**
-         * Columns can be defined using the fluent syntax:
-         * - CRUD::column('price')->type('number');
-         */
     }
 
     /**

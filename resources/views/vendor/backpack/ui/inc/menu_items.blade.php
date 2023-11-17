@@ -5,4 +5,4 @@
 <x-backpack::menu-item title="Pedigrees" icon="la la-project-diagram" :link="backpack_url('pedigree')" />
 <x-backpack::menu-item title="Races" icon="la la-flag" :link="backpack_url('race')" />
 
-<x-backpack::menu-item title="Pigeon Breeding Information" icon="la la-crow" :link="backpack_url('pigeon_breeding_information')" />
+<x-backpack::menu-item title="Breeding Information" icon="la la-crow" :link="backpack_url('pigeon_breeding_information')" />
