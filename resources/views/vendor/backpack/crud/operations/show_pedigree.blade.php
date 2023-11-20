@@ -21,12 +21,11 @@
         }
 
         .person {
-            background-color: #007bff;
+            background-color: gray;
             color: #fff;
-            border: 2px solid #0056b3;
-            border-radius: 50%;
-            width: 100px;
-            height: 100px;
+            border: 2px solid dimgray;
+            width: 200px;
+            height: 200px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -44,23 +43,65 @@
 
     <div class="container">
         <div class="pedigree">
-            <div class="person">{{ $pigeon->name }}</div>
+            <div class="person">
+                <span class="d-block">
+                    <img src="/{{ $pigeon->img_url }}" width="100" height="100">
+                </span>
+                <span class="d-block">{{ $pigeon->name }}</span>
+                <span class="d-block">{{ Carbon\Carbon::parse($pigeon->date_hatched)->format('M d, Y') }}</span>
+            </div>
         </div>
         @if($pigeon->dam && $pigeon->sire)
             <div class="pedigree">
-                <div class="person">{{ $pigeon->dam->name }}</div>
+                <div class="person">
+                    <span class="d-block">
+                        <img src="/{{ $pigeon->dam->img_url }}" width="100" height="100">
+                    </span>
+                    <span class="d-block">{{ $pigeon->dam->name }}</span>
+                    <span class="d-block">{{ Carbon\Carbon::parse($pigeon->dam->date_hatched)->format('M d, Y') }}</span>
+                </div>
                 <div class="connection"></div>
-                <div class="person">{{ $pigeon->sire->name }}</div>
+                <div class="person">
+                    <span class="d-block">
+                        <img src="/{{ $pigeon->sire->img_url }}" width="100" height="100">
+                    </span>
+                    <span class="d-block">{{ $pigeon->sire->name }}</span>
+                    <span class="d-block">{{ Carbon\Carbon::parse($pigeon->sire->date_hatched)->format('M d, Y') }}</span>
+                </div>
             </div>
             @if($pigeon->dam->dam && $pigeon->sire->sire)
                 <div class="pedigree">
-                    <div class="person">{{ $pigeon->dam->dam->name }}</div>
+                    <div class="person">
+                        <span class="d-block">
+                            <img src="/{{ $pigeon->dam->dam->img_url }}" width="100" height="100">
+                        </span>
+                        <span class="d-block">{{ $pigeon->dam->dam->name }}</span>
+                        <span class="d-block">{{ Carbon\Carbon::parse($pigeon->dam->dam->date_hatched)->format('M d, Y') }}</span>
+                    </div>
                     <div class="connection"></div>
-                    <div class="person">{{ $pigeon->dam->sire->name }}</div>
+                    <div class="person">
+                        <span class="d-block">
+                            <img src="/{{ $pigeon->dam->sire->img_url }}" width="100" height="100">
+                        </span>
+                        <span class="d-block">{{ $pigeon->dam->sire->name }}</span>
+                        <span class="d-block">{{ Carbon\Carbon::parse($pigeon->dam->sire->date_hatched)->format('M d, Y') }}</span>
+                    </div>
                     <div class="connection"></div>
-                    <div class="person">{{ $pigeon->sire->dam->name }}</div>
+                    <div class="person">
+                        <span class="d-block">
+                            <img src="/{{ $pigeon->sire->dam->img_url }}" width="100" height="100">
+                        </span>
+                        <span class="d-block">{{ $pigeon->sire->dam->name }}</span>
+                        <span class="d-block">{{ Carbon\Carbon::parse($pigeon->sire->dam->date_hatched)->format('M d, Y') }}</span>
+                    </div>
                     <div class="connection"></div>
-                    <div class="person">{{ $pigeon->sire->sire->name }}</div>
+                    <div class="person">
+                        <span class="d-block">
+                            <img src="/{{ $pigeon->sire->sire->img_url }}" width="100" height="100">
+                        </span>
+                        <span class="d-block">{{ $pigeon->sire->sire->name }}</span>
+                        <span class="d-block">{{ Carbon\Carbon::parse($pigeon->sire->sire->date_hatched)->format('M d, Y') }}</span>
+                    </div>
                 </div>
             @endif
         @endif

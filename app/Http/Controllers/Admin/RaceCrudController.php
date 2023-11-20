@@ -43,6 +43,19 @@ class RaceCrudController extends CrudController
     {
         CRUD::setFromDb(); // set columns from db columns.
 
+        $this->crud->addColumn([
+            'name' => 'is_finished',
+            'label' => 'Status',
+            'type' => 'custom_html',
+            'value' => function ($entry) {
+                if ($entry->is_finished) {
+                    return '<span class="text-success">Finished</span>';
+                } else {
+                    return '<span class="text-warning">In Progress</span>';
+                }
+            }
+        ]);
+
         /**
          * Columns can be defined using the fluent syntax:
          * - CRUD::column('price')->type('number');

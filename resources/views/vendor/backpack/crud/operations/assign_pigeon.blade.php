@@ -14,7 +14,7 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-body">
-                        <form action="">
+                        <form action="{{ route('race.add-pigeon') }}" method="POST">
                             {{ csrf_field() }}
 
                             <input type="hidden" name="race_id" value="{{ $raceId }}">
@@ -39,6 +39,17 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-body">
+                        @if (!$isEnded)
+                            @if (!$isStarted)
+                                <form action="{{ route('race.start', ['raceId' => $raceId]) }}" method="GET">
+                                    <button class="btn btn-primary mb-4">Start Race</button>
+                                </form>
+                            @else
+                                <form action="{{ route('race.end', ['raceId' => $raceId]) }}" method="GET">
+                                    <button class="btn btn-primary mb-4">End Race</button>
+                                </form>
+                            @endif
+                        @endif
                         <table class="table table-striped">
                             <thead>
                                 <tr>
@@ -46,16 +57,23 @@
                                     <th>Speed</th>
                                     <th>Start Time</th>
                                     <th>Arrival Time</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($racePigeons as $racePigeon)
                                     <tr>
                                         <td>{{ $racePigeon->pigeon->name }}</td>
-                                        <td>{{ $racePigeon->speed }}</td>
-                                        <td>{{ $racePigeon->start_time }}</td>
+                                        <td>{{ $racePigeon->speed }} KM/H</td>
                                         <td>{{ $racePigeon->start_date_time }}</td>
                                         <td>{{ $racePigeon->end_date_time }}</td>
+                                        <td>
+                                            @if ($racePigeon->start_date_time)
+                                                <form action="{{ route('race.arrive', ['raceId' => $raceId, 'pigeonId' => $racePigeon->pigeon->id]) }}" method="GET">
+                                                    <button class="btn btn-primary btn-sm">Pigeon Arrived</button>
+                                                </form>
+                                            @endif
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

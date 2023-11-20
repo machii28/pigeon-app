@@ -17,7 +17,7 @@ class RacePigeon extends Model
         'end_date_time'
     ];
 
-    public function pigeons()
+    public function pigeon()
     {
         return $this->belongsTo(Pigeon::class, 'pigeon_id', 'id');
     }
