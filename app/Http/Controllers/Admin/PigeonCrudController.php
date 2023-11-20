@@ -30,6 +30,8 @@ class PigeonCrudController extends CrudController
         CRUD::setModel(\App\Models\Pigeon::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/pigeon');
         CRUD::setEntityNameStrings('pigeon', 'pigeons');
+
+        $this->crud->addClause('where', 'owner_id', '=', backpack_auth()->id());
     }
 
     /**
@@ -138,13 +140,6 @@ class PigeonCrudController extends CrudController
         ]);
 
         CRUD::field([
-            'class' => 'hidden',
-            'name'  => 'owner_id',
-            'type'  => 'text',
-            'value' => backpack_auth()->id(),
-        ]);
-
-        CRUD::field([
             'name' => 'img_url',
             'label' => 'Image',
             'type' => 'upload',
@@ -153,10 +148,6 @@ class PigeonCrudController extends CrudController
                 'path' => 'uploads'
             ]
         ]);
-        /**
-         * Fields can be defined using the fluent syntax:
-         * - CRUD::field('price')->type('number');
-         */
     }
 
     /**
