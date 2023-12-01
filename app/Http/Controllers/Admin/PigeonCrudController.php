@@ -148,6 +148,12 @@ class PigeonCrudController extends CrudController
                 'path' => 'uploads'
             ]
         ]);
+
+        $this->crud->field([
+            'name' => 'owner_id',
+            'type' => 'hidden',
+            'value' => backpack_auth()->id()
+        ]);
     }
 
     /**
