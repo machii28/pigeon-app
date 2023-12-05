@@ -30,8 +30,6 @@ class PigeonCrudController extends CrudController
         CRUD::setModel(\App\Models\Pigeon::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/pigeon');
         CRUD::setEntityNameStrings('pigeon', 'pigeons');
-
-        $this->crud->addClause('where', 'owner_id', '=', backpack_auth()->id());
     }
 
     /**
@@ -42,6 +40,8 @@ class PigeonCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        $this->crud->addClause('where', 'owner_id', backpack_auth()->id());
+
         //CRUD::setFromDb(); // set columns from db columns.
         CRUD::column('id');
         CRUD::addColumn([

@@ -43,6 +43,8 @@ class RaceCrudController extends CrudController
     {
         CRUD::setFromDb(); // set columns from db columns.
 
+        $this->crud->addClause('where', 'owner_id', backpack_auth()->id());
+
         $this->crud->addColumn([
             'name' => 'is_finished',
             'label' => 'Status',
