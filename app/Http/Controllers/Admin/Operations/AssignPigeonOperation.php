@@ -80,8 +80,8 @@ trait AssignPigeonOperation
         $this->data['pigeons'] = Pigeon::where('owner_id', backpack_auth()->id())
             ->whereNotIn('id', $racePigeons->pluck('pigeon_id')->toArray())
             ->get();
-        $this->data['isStarted'] = $racePigeons->first()->start_date_time ? true : false;
-        $this->data['isEnded'] = $racePigeons->first()->race->is_finished;
+        $this->data['isStarted'] = $racePigeons->first()?->start_date_time ? true : false;
+        $this->data['isEnded'] = $racePigeons->first()?->race->is_finished;
 
         // load the view
         return view('crud::operations.assign_pigeon', $this->data);

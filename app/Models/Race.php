@@ -17,6 +17,7 @@ class Race extends Model
         'ending_point',
         'distance',
         'start_date',
-        'end_date'
+        'end_date',
+        'owner_id'
     ];
 }
