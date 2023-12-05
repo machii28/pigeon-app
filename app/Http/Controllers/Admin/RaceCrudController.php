@@ -33,15 +33,12 @@ class RaceCrudController extends CrudController
         CRUD::setEntityNameStrings('race', 'races');
     }
 
-    /**
-     * Define what happens when the List operation is loaded.
-     *
-     * @see  https://backpackforlaravel.com/docs/crud-operation-list-entries
-     * @return void
-     */
     protected function setupListOperation()
     {
         CRUD::setFromDb(); // set columns from db columns.
+        CRUD::setOperationSetting('showEntriesCount', true);
+
+        $totalRows = $this->crud->count();
 
         $this->crud->addClause('where', 'owner_id', backpack_auth()->id());
 
@@ -57,6 +54,8 @@ class RaceCrudController extends CrudController
                 }
             }
         ]);
+
+        $this->crud->setOperationSetting('totalEntryCount', $totalRows);
 
         /**
          * Columns can be defined using the fluent syntax:
