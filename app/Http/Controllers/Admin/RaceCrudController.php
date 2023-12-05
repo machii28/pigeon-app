@@ -75,6 +75,12 @@ class RaceCrudController extends CrudController
         CRUD::setValidation(RaceRequest::class);
         CRUD::setFromDb(); // set fields from db columns.
 
+        $this->crud->field([
+            'name' => 'owner_id',
+            'type' => 'hidden',
+            'value' => backpack_auth()->user()->id
+        ]);
+
         /**
          * Fields can be defined using the fluent syntax:
          * - CRUD::field('price')->type('number');

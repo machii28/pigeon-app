@@ -46,6 +46,8 @@ class PedigreeCrudController extends CrudController
         $this->crud->removeButtonFromStack('show', 'line');
         $this->crud->removeButtonFromStack('delete', 'line');
 
+        $this->crud->addClause('where', 'owner_id', backpack_auth()->id());
+
         CRUD::column('id');
         CRUD::addColumn([
             'name' => 'img_url',
