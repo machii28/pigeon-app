@@ -6,3 +6,8 @@
 <x-backpack::menu-item title="Races" icon="la la-flag" :link="backpack_url('race')" />
 
 <x-backpack::menu-item title="Breeding Information" icon="la la-crow" :link="backpack_url('pigeon_breeding_information')" />
+
+
+@if (backpack_auth()->user()->role === 'admin')
+    <x-backpack::menu-item title="Users" icon="la la-user" :link="backpack_url('user')" />
+@endif

@@ -73,10 +73,12 @@ trait AssignPigeonOperation
         CRUD::hasAccessOrFail('assignPigeon');
 
         $racePigeons = RacePigeon::where('race_id', $raceId)->get();
+        $race = Race::where('id', $raceId)->first();
         $this->data['crud'] = $this->crud;
         $this->data['title'] = CRUD::getTitle() ?? 'Assign Pigeon';
         $this->data['raceId'] = $raceId;
         $this->data['racePigeons'] = $racePigeons;
+        $this->data['race'] = $race;
         $this->data['pigeons'] = Pigeon::where('owner_id', backpack_auth()->id())
             ->whereNotIn('id', $racePigeons->pluck('pigeon_id')->toArray())
             ->get();

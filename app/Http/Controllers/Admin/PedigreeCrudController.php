@@ -46,7 +46,9 @@ class PedigreeCrudController extends CrudController
         $this->crud->removeButtonFromStack('show', 'line');
         $this->crud->removeButtonFromStack('delete', 'line');
 
-        $this->crud->addClause('where', 'owner_id', backpack_auth()->id());
+        if (backpack_auth()->user()->role !== 'admin') {
+            $this->crud->addClause('where', 'owner_id', backpack_auth()->id());
+        }
 
         CRUD::column('id');
         CRUD::addColumn([
@@ -58,6 +60,13 @@ class PedigreeCrudController extends CrudController
         ]);
         CRUD::column('ring_number');
         CRUD::column('name');
+        CRUD::column('id')->remove();
+
+        $this->crud->addColumn([
+            'name' => 'row_number',
+            'type' => 'row_number',
+            'label' => '#'
+        ])->makeFirstColumn();
     }
 
     /**

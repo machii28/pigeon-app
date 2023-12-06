@@ -11,28 +11,30 @@
 @section('content')
     <div class="container-fluid animated fadeIn">
         <div class="row">
-            <div class="col-sm-12">
-                <div class="card">
-                    <div class="card-body">
-                        <form action="{{ route('race.add-pigeon') }}" method="POST">
-                            {{ csrf_field() }}
+            @if (!$isStarted)
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <form action="{{ route('race.add-pigeon') }}" method="POST">
+                                {{ csrf_field() }}
 
-                            <input type="hidden" name="race_id" value="{{ $raceId }}">
+                                <input type="hidden" name="race_id" value="{{ $raceId }}">
 
-                            <div class="mb-3">
-                                <label for="pigeon_id" class="form-label">Pigeon</label>s
-                                <select name="pigeon_id" id="pigeons" class="form-control">
-                                    @foreach($pigeons as $pigeon)
-                                        <option value="{{ $pigeon->id }}">{{ $pigeon->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                                <div class="mb-3">
+                                    <label for="pigeon_id" class="form-label">Pigeon</label>s
+                                    <select name="pigeon_id" id="pigeons" class="form-control">
+                                        @foreach($pigeons as $pigeon)
+                                            <option value="{{ $pigeon->id }}">{{ $pigeon->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
 
-                            <button class="btn btn-primary">Add Pigeon</button>
-                        </form>
+                                <button class="btn btn-primary">Add Pigeon</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
+            @endif
         </div>
 
         <div class="row">
@@ -52,30 +54,32 @@
                         @endif
                         <table class="table table-striped">
                             <thead>
-                                <tr>
-                                    <th>Pigeon</th>
-                                    <th>Speed</th>
-                                    <th>Start Time</th>
-                                    <th>Arrival Time</th>
-                                    <th>Actions</th>
-                                </tr>
+                            <tr>
+                                <th>Pigeon</th>
+                                <th>Speed</th>
+                                <th>Start Time</th>
+                                <th>Arrival Time</th>
+                                <th>Actions</th>
+                            </tr>
                             </thead>
                             <tbody>
-                                @foreach($racePigeons as $racePigeon)
-                                    <tr>
-                                        <td>{{ $racePigeon->pigeon->name }}</td>
-                                        <td>{{ $racePigeon->speed }} KM/H</td>
-                                        <td>{{ $racePigeon->start_date_time }}</td>
-                                        <td>{{ $racePigeon->end_date_time }}</td>
-                                        <td>
-                                            @if ($racePigeon->start_date_time)
-                                                <form action="{{ route('race.arrive', ['raceId' => $raceId, 'pigeonId' => $racePigeon->pigeon->id]) }}" method="GET">
-                                                    <button class="btn btn-primary btn-sm">Pigeon Arrived</button>
-                                                </form>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                @endforeach
+                            @foreach($racePigeons as $racePigeon)
+                                <tr>
+                                    <td>{{ $racePigeon->pigeon->name }}</td>
+                                    <td>{{ $racePigeon->speed }} KM/H</td>
+                                    <td>{{ $racePigeon->start_date_time }}</td>
+                                    <td>{{ $racePigeon->end_date_time }}</td>
+                                    <td>
+                                        @if ($racePigeon->start_date_time && !$racePigeon->end_date_time)
+                                            <form
+                                                action="{{ route('race.arrive', ['raceId' => $raceId, 'pigeonId' => $racePigeon->pigeon->id]) }}"
+                                                method="GET">
+                                                <button class="btn btn-primary btn-sm">Pigeon Arrived</button>
+                                            </form>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div>

@@ -40,7 +40,13 @@ class PigeonCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        $this->crud->addClause('where', 'owner_id', backpack_auth()->id());
+        if (backpack_auth()->user()->role !== 'admin') {
+            $this->crud->addClause('where', 'owner_id', backpack_auth()->id());
+        }
+
+        if (backpack_auth()->user()->role === 'admin') {
+            $this->crud->removeAllButtonsFromStack('top');
+        }
 
         //CRUD::setFromDb(); // set columns from db columns.
         CRUD::column('id');
@@ -56,6 +62,14 @@ class PigeonCrudController extends CrudController
         CRUD::column('color_description')->label('Color');
         CRUD::column('sex')->label('Gender');
         CRUD::column('notes')->type('text');
+
+        CRUD::column('id')->remove();
+
+        $this->crud->addColumn([
+            'name' => 'row_number',
+            'type' => 'row_number',
+            'label' => '#'
+        ])->makeFirstColumn();
     }
 
     /**

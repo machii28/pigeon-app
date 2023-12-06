@@ -18,6 +18,6 @@ class Race extends Model
         'distance',
         'start_date',
         'end_date',
-        'owner_id'
+        'owner_id',
     ];
 }
